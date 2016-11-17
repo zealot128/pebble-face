@@ -1,0 +1,27 @@
+{
+    "author": "info@stefanwienert.de",
+    "dependencies": {},
+    "keywords": [],
+    "name": "simple-watch-88",
+    "pebble": {
+        "capabilities": [
+            "health"
+        ],
+        "displayName": "simple-watch-88",
+        "enableMultiJS": true,
+        "messageKeys": [],
+        "projectType": "rocky",
+        "resources": {
+            "media": []
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "diorite"
+        ],
+        "uuid": "718ee142-c899-4bd7-8368-772667d037cd",
+        "watchapp": {
+            "watchface": true
+        }
+    },
+    "version": "1.0.0"
+}
