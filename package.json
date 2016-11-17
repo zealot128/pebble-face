@@ -5,6 +5,7 @@
     "name": "simple-watch-88",
     "pebble": {
         "capabilities": [
+            "location",
             "health"
         ],
         "displayName": "simple-watch-88",

@@ -2,26 +2,26 @@ var rocky = require('rocky');
 
 var Config = {
   hourTicks: {
-    width: 2,
+    width: 3,
     length: 3,
     widthQuarter: 2,
     lengthQuarter: 3
   },
   hourHand: {
-    width: 3,
+    width: 7,
     length: 0.5,
     distanceFromCenter: 0.05,
     color: "white"
   },
   minuteHand: {
-    width: 4,
-    length: 0.85,
+    width: 7,
+    length: 0.80,
     distanceFromCenter: 0.05,
-    color: "lightgray"
+    color: "white"
   },
   weather: {
     windArrow: {
-      length: 7,
+      length: 9,
       tipAngle: 35,
       tipLength: 3
     }
@@ -76,10 +76,10 @@ rocky.on('draw', function(event) {
 });
 
 function drawCenter(ctx) {
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = 'white';
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = 'gray';
   ctx.beginPath();
-  ctx.arc(State.cx, State.cy, 2, 0, 2 * Math.PI, false);
+  ctx.arc(State.cx, State.cy, 3, 0, 2 * Math.PI, false);
   ctx.stroke(); 
 }
 
@@ -107,11 +107,11 @@ function drawWeather(ctx, weather) {
   ctx.font = '14px Gothic';
   ctx.textAlign = 'left';
   var string = "" + weather.temp + "°C " + weather.desc;
-  ctx.fillText(string, 5, 2, (State.cx - 5));  
+  ctx.fillText(string, 5, 2, (State.cx * 2 - 10));  
   ctx.textAlign = 'right';
   ctx.fillStyle = 'lightgray';
-  string = "" + weather.tempMin + "°C/"  + weather.tempMax + "°C";
-  ctx.fillText(string, State.cx * 2 - 5, 2, (State.cx - 5));  
+  //string = "" + weather.tempMin + "°C/"  + weather.tempMax + "°C";
+  //ctx.fillText(string, State.cx * 2 - 5, 2, (State.cx - 5));  
 
   //var deg = weather.windDeg;
   
@@ -128,6 +128,18 @@ function drawWeather(ctx, weather) {
   var y1 = round(State.cy * 2 - 10);
   var x2 = round(x1 + dx);
   var y2 = round(y1 + dy);
+  
+  var ymin = Math.max(y1, y2);
+  var deltaYmin = State.cy * 2 - 5 - ymin;
+  console.log("Verschiebung y=" + deltaYmin);
+  y1 += deltaYmin;
+  y2 += deltaYmin;
+  
+  var xmax = Math.max(x1, x2);
+  var deltaXmax = 20 - 5 - xmax;
+  x1 += deltaXmax;
+  x2 += deltaXmax;
+
   drawLine(ctx, x1, y1, x2, y2, 1, 'white');  
  
   function drawArrowTip(ctx, x1, x2, tipAngle) {
@@ -142,7 +154,7 @@ function drawWeather(ctx, weather) {
   drawArrowTip(ctx, x1, x2, deg + 180 - Config.weather.windArrow.tipAngle);
   drawArrowTip(ctx, x1, x2, deg + 180 + Config.weather.windArrow.tipAngle);
   ctx.textAlign = 'left';
-  ctx.fillText("" + weather.windSpeed + "km/h", x1 + 10, (State.cy * 2) - 20, (State.cx - 10));
+  ctx.fillText("" + weather.windSpeed + "km/h", 20, (State.cy * 2) - 20, (State.cx - 10));
 }
 
 function round(number) {
