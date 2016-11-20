@@ -53,5 +53,5 @@ function request(url, type, callback) {
 }
 
 function log(msg) {
-  console.log(msg);
+  //console.log(msg);
 }

@@ -2,19 +2,19 @@ var rocky = require('rocky');
 
 var Config = {
   hourTicks: {
-    width: 3,
-    length: 3,
+    width: 2,
+    length: 6,
     widthQuarter: 2,
-    lengthQuarter: 3
+    lengthQuarter: 6
   },
   hourHand: {
-    width: 7,
+    width: 3,
     length: 0.5,
     distanceFromCenter: 0.05,
     color: "white"
   },
   minuteHand: {
-    width: 7,
+    width: 3,
     length: 0.80,
     distanceFromCenter: 0.05,
     color: "white"
@@ -76,8 +76,8 @@ rocky.on('draw', function(event) {
 });
 
 function drawCenter(ctx) {
-  ctx.lineWidth = 5;
-  ctx.strokeStyle = 'gray';
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = 'lightgray';
   ctx.beginPath();
   ctx.arc(State.cx, State.cy, 3, 0, 2 * Math.PI, false);
   ctx.stroke(); 
@@ -166,7 +166,7 @@ function formatDate(d) {
   // TODO d.toLocaleString is broken in emulator, so manual
   var m = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" ][d.getMonth()];
   var day = d.getDate();
-  var w = [null, "Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"][d.getDay()];
+  var w = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"][d.getDay()];
   return w + ", " + day + ". " + m;
 }
 
@@ -188,11 +188,11 @@ function drawHourMark(ctx, i) {
   var angle = fractionToRadian(pos);
   var length, width;
   if (i % 3 === 0) {
-    length = Config.hourTicks.widthQuarter;
-    width = Config.hourTicks.lengthQuarter;
+    length = Config.hourTicks.lengthQuarter;
+    width = Config.hourTicks.widthQuarter;
   } else {    
-    length = Config.hourTicks.width;
-    width = Config.hourTicks.length;
+    width = Config.hourTicks.width;
+    length = Config.hourTicks.length;
   }
   var radius = Config.maxLength * 0.9;
   var x1 = State.cx + Math.sin(angle) * radius;
